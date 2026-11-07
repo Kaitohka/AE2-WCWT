@@ -1269,6 +1269,11 @@ public class WirelessComprehensiveWorkTerminalMenuHost extends WTMenuHost
         }
     }
 
+    /** Drops a pending panel that no host consumed, so a later ordinary open does not land in it. */
+    public static void clearPendingExtendedUi(Player player) {
+        getOrCreateWcwtPlayerData(player).remove(PLAYER_PENDING_EXTENDED_UI_TAG);
+    }
+
     private static ExtendedUIType consumePendingExtendedUi(Player player) {
         var wcwtData = getOrCreateWcwtPlayerData(player);
         int ordinal = wcwtData.getInt(PLAYER_PENDING_EXTENDED_UI_TAG);
