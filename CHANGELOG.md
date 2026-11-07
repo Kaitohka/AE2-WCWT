@@ -23,6 +23,7 @@
 17. Fixed: Resonating conversion is refused while its panel is closed and checks each write, so cached patterns are no longer lost.
 18. Fixed: A network tool kept in the toolkit and runtime changes to toolkitSlotCount no longer give client and server different slot layouts, which disconnected players or shifted slots.
 19. Fixed: Pattern-management settings synced from the server now update the client display.
+20. Fixed: Combining terminals keeps stored items such as crafting-grid contents and singularities, returning any that cannot be merged.
 
 ### 中文
 
@@ -45,6 +46,7 @@
 17. 修复：谐振面板未打开时转换丢失缓存样板。
 18. 修复：工具包放入网络工具或运行时修改工具包槽数导致掉线或槽位错位。
 19. 修复：样板管理设置的服务端同步在客户端不生效。
+20. 修复：合并终端时覆盖合成网格、奇点等已存物品。
 
 
 ## v1.3.10
