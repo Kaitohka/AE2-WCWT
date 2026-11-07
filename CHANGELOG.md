@@ -19,6 +19,7 @@
 13. Fixed: Adapted to the EAEP 1.6.4 upload API split and moved auto-upload setting while retaining older-version support (#39).
 14. Changed: README and the GuideME integrations page now reflect v1.3.11, including Some Useless Things support and removing features dropped in v1.3.9.
 15. Fixed: Shift-clicking a manual anvil or smithing result moves the whole result or nothing, so inputs are no longer lost or duplicated when the inventory is nearly full.
+16. Fixed: Re-encoding a pattern that already exists in NeoECO or a Tianshu array returns the blank pattern instead of consuming it.
 
 ### 中文
 
@@ -37,6 +38,7 @@
 13. 修复：兼容 EAEP 1.6.4 上传接口拆分和自动上传配置迁移，并保留旧版支持（#39）。
 14. 优化：同步 README 与指南至 v1.3.11，补充无用之物说明，移除已删除功能描述。
 15. 修复：背包将满时 shift 取出手动铁砧或锻造结果丢失输入或复制物品。
+16. 修复：NeoECO 或天枢阵列判定重复样板时吞掉空白样板。
 
 
 ## v1.3.10
