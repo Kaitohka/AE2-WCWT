@@ -29,6 +29,7 @@
 23. Fixed: Items put back into the network after a cancelled transfer go to the player when the network cannot take them.
 24. Fixed: Moving everything into the network no longer leaves zero-count stacks in slots.
 25. Fixed: Shift-taking from a pattern provider slot only hands out what the provider actually released.
+26. Fixed: The selected toolkit cell can no longer be dropped while a menu is open, so a network tool's upgrade cards are no longer lost.
 
 ### 中文
 
@@ -57,6 +58,7 @@
 23. 修复：回存网络失败时物品消失。
 24. 修复：全部存入网络后槽位残留数量为 0 的物品。
 25. 修复：样板供应器拒绝取出时 shift 取出复制样板。
+26. 修复：打开界面时丢弃工具包选中物品导致网络工具升级卡丢失。
 
 
 ## v1.3.10

@@ -178,7 +178,9 @@ public final class WcwtToolkitHotbarState {
 
     /** Drops the selected extra-bar cell without touching the vanilla hotbar. */
     public static void dropSelected(ServerPlayer player, boolean all) {
-        if (!isToolkitSelected(player)) {
+        // A vanilla client only drops the held item with no screen open. While a menu is open, a toolkit cell
+        // may back it (for example a network tool's upgrade inventory), and emptying it would orphan that menu.
+        if (!isToolkitSelected(player) || player.containerMenu != player.inventoryMenu) {
             return;
         }
         ItemStack selected = getSelectedToolkit(player);
