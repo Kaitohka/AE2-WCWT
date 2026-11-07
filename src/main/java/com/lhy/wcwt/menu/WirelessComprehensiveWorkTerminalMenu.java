@@ -340,6 +340,11 @@ public class WirelessComprehensiveWorkTerminalMenu extends CraftingTermMenu impl
 
         var toolkitInv = host.getSubInventory(WirelessComprehensiveWorkTerminalMenuHost.INV_TOOLKIT);
         if (toolkitInv != null) {
+            if (ip.player instanceof ServerPlayer serverPlayer) {
+                // The client sizes its toolkit from this sync, which must arrive before the open-screen packet.
+                toolkitInv.size();
+                com.lhy.wcwt.helpers.WcwtToolkitSync.ensureLayoutSynced(serverPlayer);
+            }
             for (int i = 0; i < toolkitInv.size(); i++) {
                 addSlot(new ToolkitSlot(toolkitInv, i), WcwtSlotSemantics.WCWT_TOOLKIT);
             }

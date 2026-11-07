@@ -69,8 +69,13 @@ public final class WcwtToolkitStore {
         return state.memory;
     }
 
-    /** A plain inventory for a client-side terminal menu; menu slot sync fills it. */
-    public static AppEngInternalInventory clientInventory(boolean memory) {
+    /**
+     * A plain inventory for a client-side terminal menu; menu slot sync fills it. It is sized like the
+     * server toolkit, which the server syncs before opening the menu, because the client's copy of the
+     * server config is only refreshed at login and {@code toolkitSlotCount} can change at runtime.
+     */
+    public static AppEngInternalInventory clientInventory(Player player, boolean memory) {
+        int syncedSize = WcwtToolkitHotbarState.clientToolkitSize(player);
         var inventory = new AppEngInternalInventory(new InternalInventoryHost() {
             @Override
             public void saveChangedInventory(AppEngInternalInventory inv) {
@@ -80,7 +85,7 @@ public final class WcwtToolkitStore {
             public boolean isClientSide() {
                 return true;
             }
-        }, configuredSize());
+        }, syncedSize > 0 ? syncedSize : configuredSize());
         if (!memory) {
             inventory.setFilter(new ToolkitItemFilter());
         }

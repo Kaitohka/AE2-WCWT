@@ -1215,12 +1215,12 @@ public class WirelessComprehensiveWorkTerminalMenuHost extends WTMenuHost
         }
         if (memory) {
             if (clientToolkitMemoryInv == null) {
-                clientToolkitMemoryInv = WcwtToolkitStore.clientInventory(true);
+                clientToolkitMemoryInv = WcwtToolkitStore.clientInventory(player, true);
             }
             return clientToolkitMemoryInv;
         }
         if (clientToolkitInv == null) {
-            clientToolkitInv = WcwtToolkitStore.clientInventory(false);
+            clientToolkitInv = WcwtToolkitStore.clientInventory(player, false);
         }
         return clientToolkitInv;
     }
