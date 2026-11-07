@@ -2433,13 +2433,13 @@ public class WirelessComprehensiveWorkTerminalMenu extends CraftingTermMenu impl
                 slotStack.grow(toInsert);
                 blankPatternSlot.set(slotStack);
             } else {
-                StorageHelper.poweredInsert(energySource, storage, blankKey, extracted, getActionSource());
+                returnExtracted(energySource, storage, blankKey, extracted);
                 return;
             }
 
             long leftover = extracted - toInsert;
             if (leftover > 0) {
-                StorageHelper.poweredInsert(energySource, storage, blankKey, leftover, getActionSource());
+                returnExtracted(energySource, storage, blankKey, leftover);
             }
             if (DEBUG_BLANK_PATTERN_SYNC) {
                 logBlankPatternSync("autofill.success",
@@ -2584,6 +2584,37 @@ public class WirelessComprehensiveWorkTerminalMenu extends CraftingTermMenu impl
         broadcastChanges();
     }
 
+    /**
+     * Puts back something this menu already took out of the network. A powered insert can fall short when
+     * energy runs out, so the rest goes in unpowered (the energy was paid on extraction), and whatever the
+     * network still refuses goes to the player rather than vanishing.
+     */
+    private void returnExtracted(appeng.api.networking.energy.IEnergySource energy,
+                                 appeng.api.storage.MEStorage storage, AEKey key, long amount) {
+        if (amount <= 0) {
+            return;
+        }
+        long remaining = amount - StorageHelper.poweredInsert(energy, storage, key, amount, getActionSource());
+        if (remaining > 0) {
+            remaining -= storage.insert(key, remaining, Actionable.MODULATE, getActionSource());
+        }
+        if (remaining <= 0) {
+            return;
+        }
+        if (key instanceof AEItemKey itemKey) {
+            while (remaining > 0) {
+                int count = (int) Math.min(remaining, itemKey.getMaxStackSize());
+                ItemStack stack = itemKey.toStack(count);
+                if (!getPlayer().getInventory().add(stack)) {
+                    getPlayer().drop(stack, false);
+                }
+                remaining -= count;
+            }
+        } else {
+            WcwtMod.LOGGER.warn("WCWT could not return {} x {} to the network", remaining, key);
+        }
+    }
+
     private void restockManualWorkspaceInputsAeStyle(InternalInventory inventory, ItemStack[] before) {
         if (isClientSide() || menuHost == null || before == null) {
             return;
@@ -2611,7 +2642,7 @@ public class WirelessComprehensiveWorkTerminalMenu extends CraftingTermMenu impl
             }
             ItemStack remainder = inventory.insertItem(slot, key.toStack(1), false);
             if (!remainder.isEmpty()) {
-                StorageHelper.poweredInsert(energySource, storage, key, remainder.getCount(), getActionSource());
+                returnExtracted(energySource, storage, key, remainder.getCount());
             }
         }
     }
@@ -3879,7 +3910,7 @@ public class WirelessComprehensiveWorkTerminalMenu extends CraftingTermMenu impl
         long extracted = StorageHelper.poweredExtraction(energySource, storage, fluidKey, amount, getActionSource());
         if (extracted < amount) {
             if (extracted > 0) {
-                StorageHelper.poweredInsert(energySource, storage, fluidKey, extracted, getActionSource());
+                returnExtracted(energySource, storage, fluidKey, extracted);
             }
             return false;
         }
