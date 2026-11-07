@@ -4486,7 +4486,9 @@ public class WirelessComprehensiveWorkTerminalMenu extends CraftingTermMenu impl
 
     public void convertSelectedPatternToResonating() {
         var host = getMenuHost();
-        if (host == null) {
+        // Resonating storage slots are disabled while their panel is closed, and a disabled slot drops writes.
+        if (host == null
+                || host.getCurrentExtendedUI() != IExtendedUIHost.ExtendedUIType.RESONATING_LIGHTNING_PATTERN_CODING) {
             return;
         }
         var cacheSlots = getPatternCacheSlots();
@@ -4506,7 +4508,12 @@ public class WirelessComprehensiveWorkTerminalMenu extends CraftingTermMenu impl
                 storageFull = true;
                 break;
             }
-            targetSlot.set(resonating.copyWithCount(1));
+            ItemStack written = resonating.copyWithCount(1);
+            targetSlot.set(written);
+            if (!ItemStack.matches(targetSlot.getItem(), written)) {
+                storageFull = true;
+                break;
+            }
             cacheSlot.remove(1);
             converted++;
         }
