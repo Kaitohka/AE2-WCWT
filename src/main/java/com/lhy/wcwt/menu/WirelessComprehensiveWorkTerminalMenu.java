@@ -1539,7 +1539,7 @@ public class WirelessComprehensiveWorkTerminalMenu extends CraftingTermMenu impl
         if (mode != EncodingMode.PROCESSING) pendingOmniversalRecipe = null;
         if (isClientSide()) {
             syncedPatternEncodingMode = mode.ordinal();
-            PacketDistributor.sendToServer(new PatternEncodingModePacket(mode));
+            PacketDistributor.sendToServer(new PatternEncodingModePacket(containerId, mode));
             return;
         }
         if (patternEncodingLogic != null) {
@@ -2532,7 +2532,7 @@ public class WirelessComprehensiveWorkTerminalMenu extends CraftingTermMenu impl
             return;
         }
         if (isClientSide()) {
-            PacketDistributor.sendToServer(new TopActionPacket(TopActionPacket.Action.CLEAR_MANUAL_WORKSPACE));
+            PacketDistributor.sendToServer(new TopActionPacket(containerId, TopActionPacket.Action.CLEAR_MANUAL_WORKSPACE));
             return;
         }
         clearManualWorkspaceToNetwork();
@@ -2712,7 +2712,7 @@ public class WirelessComprehensiveWorkTerminalMenu extends CraftingTermMenu impl
 
     public void openWcwtMagnetMenu() {
         if (isClientSide()) {
-            PacketDistributor.sendToServer(new TopActionPacket(TopActionPacket.Action.OPEN_MAGNET_MENU));
+            PacketDistributor.sendToServer(new TopActionPacket(containerId, TopActionPacket.Action.OPEN_MAGNET_MENU));
             return;
         }
         openWcwtSubMenu(ModMenus.WCWT_MAGNET_MENU.get());
@@ -2720,7 +2720,7 @@ public class WirelessComprehensiveWorkTerminalMenu extends CraftingTermMenu impl
 
     public void openWcwtTrashMenu() {
         if (isClientSide()) {
-            PacketDistributor.sendToServer(new TopActionPacket(TopActionPacket.Action.OPEN_TRASH_MENU));
+            PacketDistributor.sendToServer(new TopActionPacket(containerId, TopActionPacket.Action.OPEN_TRASH_MENU));
             return;
         }
         openWcwtSubMenu(ModMenus.WCWT_TRASH_MENU.get());

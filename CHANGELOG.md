@@ -30,6 +30,7 @@
 24. Fixed: Moving everything into the network no longer leaves zero-count stacks in slots.
 25. Fixed: Shift-taking from a pattern provider slot only hands out what the provider actually released.
 26. Fixed: The selected toolkit cell can no longer be dropped while a menu is open, so a network tool's upgrade cards are no longer lost.
+27. Fixed: Terminal action packets carry the menu id, so late packets no longer act on a closed or reopened terminal.
 
 ### 中文
 
@@ -59,6 +60,7 @@
 24. 修复：全部存入网络后槽位残留数量为 0 的物品。
 25. 修复：样板供应器拒绝取出时 shift 取出复制样板。
 26. 修复：打开界面时丢弃工具包选中物品导致网络工具升级卡丢失。
+27. 修复：延迟到达的终端操作包作用到已关闭或新打开的终端。
 
 
 ## v1.3.10
