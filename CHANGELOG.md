@@ -28,6 +28,7 @@
 22. Fixed: Migrating old toolkit data no longer wipes unmigrated toolkits or deletes items that do not fit, with unit tests for the merge.
 23. Fixed: Items put back into the network after a cancelled transfer go to the player when the network cannot take them.
 24. Fixed: Moving everything into the network no longer leaves zero-count stacks in slots.
+25. Fixed: Shift-taking from a pattern provider slot only hands out what the provider actually released.
 
 ### 中文
 
@@ -55,6 +56,7 @@
 22. 修复：旧版工具包迁移清空未迁移数据或丢弃放不下的物品，新增：迁移合并单元测试。
 23. 修复：回存网络失败时物品消失。
 24. 修复：全部存入网络后槽位残留数量为 0 的物品。
+25. 修复：样板供应器拒绝取出时 shift 取出复制样板。
 
 
 ## v1.3.10

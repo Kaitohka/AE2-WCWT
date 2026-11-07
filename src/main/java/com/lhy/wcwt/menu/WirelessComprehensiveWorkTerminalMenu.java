@@ -3261,18 +3261,27 @@ public class WirelessComprehensiveWorkTerminalMenu extends CraftingTermMenu impl
             return ItemStack.EMPTY;
         }
         ItemStack original = sourceSlot.getItem().copy();
-        ItemStack toInsert = original.copy();
         int playerInventoryStart = getPlayerInventoryStartMenuIndex();
-        if (playerInventoryStart < 0 || !moveItemStackTo(toInsert, playerInventoryStart, slots.size(), true)) {
+        if (playerInventoryStart < 0) {
             return ItemStack.EMPTY;
         }
-        int moved = original.getCount() - toInsert.getCount();
-        if (moved <= 0) {
+        // Take from the provider first and hand out only what it actually released: a third-party pattern
+        // container may refuse or shorten the extraction.
+        ItemStack removed = sourceSlot.remove(original.getCount());
+        if (removed.isEmpty()) {
             return ItemStack.EMPTY;
         }
-        sourceSlot.remove(moved);
+        ItemStack toInsert = removed.copy();
+        moveItemStackTo(toInsert, playerInventoryStart, slots.size(), true);
+        boolean movedAny = toInsert.getCount() < removed.getCount();
+        if (!toInsert.isEmpty()) {
+            ItemStack rest = sourceSlot.safeInsert(toInsert);
+            if (!rest.isEmpty() && !getPlayer().getInventory().add(rest)) {
+                getPlayer().drop(rest, false);
+            }
+        }
         sourceSlot.setChanged();
-        return original;
+        return movedAny ? original : ItemStack.EMPTY;
     }
 
     private ItemStack quickMovePlayerEquipmentToInventory(Player player, Slot sourceSlot) {
