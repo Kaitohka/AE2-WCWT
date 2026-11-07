@@ -2691,7 +2691,7 @@ public class WirelessComprehensiveWorkTerminalMenu extends CraftingTermMenu impl
             }
             ItemStack remaining = stack.copy();
             remaining.shrink((int) Math.min(inserted, Integer.MAX_VALUE));
-            target.setItemDirect(i, remaining);
+            target.setItemDirect(i, remaining.isEmpty() ? ItemStack.EMPTY : remaining);
             changed = true;
         }
         if (changed) {
