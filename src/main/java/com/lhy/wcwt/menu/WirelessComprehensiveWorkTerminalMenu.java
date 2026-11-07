@@ -452,6 +452,10 @@ public class WirelessComprehensiveWorkTerminalMenu extends CraftingTermMenu impl
             @Override
             public void set(int value) {
                 syncedPatternManagementUploadEnabled = value != 0;
+                // The getters prefer the host, so the client host must follow or the synced value is never read.
+                if (isClientSide() && menuHost != null) {
+                    menuHost.setPatternManagementUploadEnabled(syncedPatternManagementUploadEnabled);
+                }
             }
         });
         addDataSlot(new net.minecraft.world.inventory.DataSlot() {
@@ -463,6 +467,9 @@ public class WirelessComprehensiveWorkTerminalMenu extends CraftingTermMenu impl
             @Override
             public void set(int value) {
                 syncedPatternManagementDisplayMode = value;
+                if (isClientSide() && menuHost != null) {
+                    menuHost.setPatternManagementDisplayMode(value);
+                }
             }
         });
         addDataSlot(new net.minecraft.world.inventory.DataSlot() {
@@ -474,6 +481,9 @@ public class WirelessComprehensiveWorkTerminalMenu extends CraftingTermMenu impl
             @Override
             public void set(int value) {
                 syncedPatternManagementShowSlots = value != 0;
+                if (isClientSide() && menuHost != null) {
+                    menuHost.setPatternManagementShowSlots(syncedPatternManagementShowSlots);
+                }
             }
         });
         addDataSlot(new net.minecraft.world.inventory.DataSlot() {
@@ -485,6 +495,9 @@ public class WirelessComprehensiveWorkTerminalMenu extends CraftingTermMenu impl
             @Override
             public void set(int value) {
                 syncedPatternManagementSearchMode = value;
+                if (isClientSide() && menuHost != null) {
+                    menuHost.setPatternManagementSearchMode(value);
+                }
             }
         });
         addDataSlot(new net.minecraft.world.inventory.DataSlot() {

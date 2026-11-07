@@ -22,6 +22,7 @@
 16. Fixed: Re-encoding a pattern that already exists in NeoECO or a Tianshu array returns the blank pattern instead of consuming it.
 17. Fixed: Resonating conversion is refused while its panel is closed and checks each write, so cached patterns are no longer lost.
 18. Fixed: A network tool kept in the toolkit and runtime changes to toolkitSlotCount no longer give client and server different slot layouts, which disconnected players or shifted slots.
+19. Fixed: Pattern-management settings synced from the server now update the client display.
 
 ### 中文
 
@@ -43,6 +44,7 @@
 16. 修复：NeoECO 或天枢阵列判定重复样板时吞掉空白样板。
 17. 修复：谐振面板未打开时转换丢失缓存样板。
 18. 修复：工具包放入网络工具或运行时修改工具包槽数导致掉线或槽位错位。
+19. 修复：样板管理设置的服务端同步在客户端不生效。
 
 
 ## v1.3.10
