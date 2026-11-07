@@ -3251,11 +3251,7 @@ public class WirelessComprehensiveWorkTerminalMenu extends CraftingTermMenu impl
         }
 
         ItemStack resultStack = manualSmithingResultSlot.getItem().copy();
-        ItemStack toInsert = resultStack.copy();
-        int playerInventoryStart = getPlayerInventoryStartMenuIndex();
-        if (playerInventoryStart < 0
-                || !moveItemStackTo(toInsert, playerInventoryStart, slots.size(), true)
-                || !toInsert.isEmpty()) {
+        if (!moveWholeStackToPlayerInventory(resultStack)) {
             return ItemStack.EMPTY;
         }
 
@@ -3269,14 +3265,40 @@ public class WirelessComprehensiveWorkTerminalMenu extends CraftingTermMenu impl
         }
 
         ItemStack resultStack = manualAnvilResultSlot.getItem().copy();
-        ItemStack toInsert = resultStack.copy();
-        int playerInventoryStart = getPlayerInventoryStartMenuIndex();
-        if (playerInventoryStart < 0 || !moveItemStackTo(toInsert, playerInventoryStart, slots.size(), true)) {
+        if (!moveWholeStackToPlayerInventory(resultStack)) {
             return ItemStack.EMPTY;
         }
 
         manualAnvilBridge.takeResult(player, resultStack.copy());
         return resultStack;
+    }
+
+    /**
+     * Moves a whole crafted result into the player inventory, or nothing at all. Workspace results consume
+     * their inputs as one unit, so a partial insert would either lose the remainder or skip the consumption.
+     */
+    private boolean moveWholeStackToPlayerInventory(ItemStack stack) {
+        int start = getPlayerInventoryStartMenuIndex();
+        if (start < 0 || stack.isEmpty()) {
+            return false;
+        }
+        int end = slots.size();
+        ItemStack[] snapshot = new ItemStack[end - start];
+        for (int i = start; i < end; i++) {
+            snapshot[i - start] = slots.get(i).getItem().copy();
+        }
+        ItemStack toInsert = stack.copy();
+        moveItemStackTo(toInsert, start, end, true);
+        if (toInsert.isEmpty()) {
+            return true;
+        }
+        for (int i = start; i < end; i++) {
+            Slot slot = slots.get(i);
+            if (!ItemStack.matches(slot.getItem(), snapshot[i - start])) {
+                slot.set(snapshot[i - start]);
+            }
+        }
+        return false;
     }
 
     private ItemStack tryMoveStackToCurioSlot(Player player, Slot sourceSlot, ItemStack sourceStack) {
