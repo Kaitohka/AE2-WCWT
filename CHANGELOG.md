@@ -25,6 +25,7 @@
 19. Fixed: Pattern-management settings synced from the server now update the client display.
 20. Fixed: Combining terminals keeps stored items such as crafting-grid contents and singularities, returning any that cannot be merged.
 21. Fixed: Leftover upgrade cards on a terminal crafted by automation are returned once the terminal reaches a player's inventory.
+22. Fixed: Migrating old toolkit data no longer wipes unmigrated toolkits or deletes items that do not fit, with unit tests for the merge.
 
 ### 中文
 
@@ -49,6 +50,7 @@
 19. 修复：样板管理设置的服务端同步在客户端不生效。
 20. 修复：合并终端时覆盖合成网格、奇点等已存物品。
 21. 修复：自动化合成的终端中剩余升级卡无法取回。
+22. 修复：旧版工具包迁移清空未迁移数据或丢弃放不下的物品，新增：迁移合并单元测试。
 
 
 ## v1.3.10
